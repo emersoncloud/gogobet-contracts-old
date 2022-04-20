@@ -29,3 +29,17 @@ build:
 
 test: 
     forge test
+
+hh *args='': 
+    #!/usr/bin/env sh
+    if [ "$1" == "hh" ]; then 
+        npx hardhat run scripts/script.ts --network hardhat
+    elif [ "$1" == "local" ]; then
+        npx hardhat run scripts/script.ts --network local
+    elif [ "$1" == "fuji" ]; then
+        npx hardhat run scripts/script.ts --network fuji
+    elif [ "$1" == "mainnet" ]; then
+        npx hardhat run scripts/script.ts --network mainnet
+    else 
+        echo "env $1 not recognized"
+    fi

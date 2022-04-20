@@ -21,6 +21,7 @@ task("ethers-accounts", "Prints the list of accounts", async (taskArgs, hre) => 
 
 const config: HardhatUserConfig = {
   solidity: "0.8.13",
+  defaultNetwork: "local",
   paths: {
     sources: "./src",
     tests: "./integration",
@@ -31,7 +32,7 @@ const config: HardhatUserConfig = {
   networks: {
     hardhat: {},
     local: {
-      url: "https://localhost:9650/ext/bc/C/rpc",
+      url: "http://localhost:9650/ext/bc/C/rpc",
       gasPrice: 225000000000,
       chainId: 43112,
       accounts: [
