@@ -10,18 +10,19 @@ subtask(TASK_COMPILE_SOLIDITY_GET_SOURCE_PATHS)
     return paths.filter((p: string) => !p.endsWith('.t.sol'));
   });
 
-
 task("ethers-accounts", "Prints the list of accounts", async (taskArgs, hre) => {
   const accounts = await hre.ethers.getSigners();
 
   for (const account of accounts) {
-    console.log(account.address);
+    const balance = await account.getBalance();
+    console.log(account.address, balance);
   }
 });
 
 const config: HardhatUserConfig = {
   solidity: "0.8.13",
-  defaultNetwork: "local",
+  defaultNetwork: "hardhat",
+
   paths: {
     sources: "./src",
     tests: "./integration",
@@ -31,6 +32,7 @@ const config: HardhatUserConfig = {
 
   networks: {
     hardhat: {},
+
     local: {
       url: "http://localhost:9650/ext/bc/C/rpc",
       gasPrice: 225000000000,
@@ -48,6 +50,7 @@ const config: HardhatUserConfig = {
         "0x750839e9dbbd2a0910efe40f50b2f3b2f2f59f5580bb4b83bd8c1201cf9a010a",
       ]
     },
+
     fuji: {
       url: "https://api.avax-test.network/ext/bc/C/rpc",
       gasPrice: 225000000000,
