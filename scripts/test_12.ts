@@ -10,11 +10,6 @@ const main = async () => {
 
     const tx = await betFactory.returns12();
     console.log("tx", tx);
-
-
-
-
-
 }
 
 main()
