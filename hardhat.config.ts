@@ -2,6 +2,7 @@ import { HardhatUserConfig, subtask, task } from 'hardhat/config';
 import { TASK_COMPILE_SOLIDITY_GET_SOURCE_PATHS } from 'hardhat/builtin-tasks/task-names';
 
 import "@nomiclabs/hardhat-waffle";
+import "@nomiclabs/hardhat-web3";
 
 // prune forge style tests from hardhat paths
 subtask(TASK_COMPILE_SOLIDITY_GET_SOURCE_PATHS)

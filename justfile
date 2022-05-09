@@ -53,3 +53,6 @@ test_bet:
 
 test_12: 
     npx hardhat run scripts/test_12.ts
+
+test_hash: 
+    npx hardhat run scripts/sha3.ts
