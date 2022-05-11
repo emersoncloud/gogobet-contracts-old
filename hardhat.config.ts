@@ -1,24 +1,29 @@
-import { HardhatUserConfig, subtask, task } from 'hardhat/config';
-import { TASK_COMPILE_SOLIDITY_GET_SOURCE_PATHS } from 'hardhat/builtin-tasks/task-names';
+import { HardhatUserConfig, subtask, task } from "hardhat/config";
+import { TASK_COMPILE_SOLIDITY_GET_SOURCE_PATHS } from "hardhat/builtin-tasks/task-names";
 
 import "@nomiclabs/hardhat-waffle";
 import "@nomiclabs/hardhat-web3";
 
 // prune forge style tests from hardhat paths
-subtask(TASK_COMPILE_SOLIDITY_GET_SOURCE_PATHS)
-  .setAction(async (_, __, runSuper) => {
+subtask(TASK_COMPILE_SOLIDITY_GET_SOURCE_PATHS).setAction(
+  async (_, __, runSuper) => {
     const paths = await runSuper();
-    return paths.filter((p: string) => !p.endsWith('.t.sol'));
-  });
-
-task("ethers-accounts", "Prints the list of accounts", async (taskArgs, hre) => {
-  const accounts = await hre.ethers.getSigners();
-
-  for (const account of accounts) {
-    const balance = await account.getBalance();
-    console.log(account.address, balance);
+    return paths.filter((p: string) => !p.endsWith(".t.sol"));
   }
-});
+);
+
+task(
+  "ethers-accounts",
+  "Prints the list of accounts",
+  async (taskArgs, hre) => {
+    const accounts = await hre.ethers.getSigners();
+
+    for (const account of accounts) {
+      const balance = await account.getBalance();
+      console.log(account.address, balance);
+    }
+  }
+);
 
 const config: HardhatUserConfig = {
   solidity: "0.8.13",
@@ -49,7 +54,7 @@ const config: HardhatUserConfig = {
         "0xcdbfd34f687ced8c6968854f8a99ae47712c4f4183b78dcc4a903d1bfe8cbf60",
         "0x86f78c5416151fe3546dece84fda4b4b1e36089f2dbc48496faf3a950f16157c",
         "0x750839e9dbbd2a0910efe40f50b2f3b2f2f59f5580bb4b83bd8c1201cf9a010a",
-      ]
+      ],
     },
 
     fuji: {
