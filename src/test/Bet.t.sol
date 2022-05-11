@@ -7,13 +7,27 @@ import "../Bet.sol";
 
 contract BetTest is Test {
     uint256 private randNonce = 0;
-	function randAddress() internal returns (address) {
-		randNonce++;
-		return address(uint160(uint256(keccak256(abi.encodePacked(randNonce, blockhash(block.timestamp))))));
-	}
+
+    function randAddress() internal returns (address) {
+        randNonce++;
+        return
+            address(
+                uint160(
+                    uint256(
+                        keccak256(
+                            abi.encodePacked(
+                                randNonce,
+                                blockhash(block.timestamp)
+                            )
+                        )
+                    )
+                )
+            );
+    }
 
     // magic address forge deploys all contracts from
-    address private constant GUARDIAN = address(0xb4c79daB8f259C7Aee6E5b2Aa729821864227e84);
+    address private constant GUARDIAN =
+        address(0xb4c79daB8f259C7Aee6E5b2Aa729821864227e84);
 
     Bet private bet;
 
@@ -24,13 +38,7 @@ contract BetTest is Test {
     string private description = "test-description";
 
     function setUp() public {
-        bet = new Bet(
-            betAmount,
-            partyOne,
-            partyTwo,
-            oracle,
-            description
-        );
+        bet = new Bet(betAmount, partyOne, partyTwo, oracle, description);
     }
 
     function testPublicParameters() public {
@@ -49,7 +57,7 @@ contract BetTest is Test {
         assertEq(10, address(bet).balance);
         assertTrue(bet.hasPaid(partyOne));
     }
-    
+
     function testBetPaidUp() public {
         vm.deal(partyOne, 200);
         vm.deal(partyTwo, 200);
@@ -78,18 +86,18 @@ contract BetTest is Test {
 
         vm.prank(partyTwo);
         bet.putUp{value: 10}();
-        
 
-        vm.prank(oracle);  
+        vm.prank(oracle);
         bet.decision(partyOne);
         assertEq(bet.winner(), partyOne);
         assertEq(20, partyOne.balance);
     }
 
     function testOnlyOracleDecision() public {
-        bytes memory customError = abi.encodeWithSelector(Bet.OnlyOracle.selector);
+        bytes memory customError = abi.encodeWithSelector(
+            Bet.OnlyOracle.selector
+        );
         vm.expectRevert(customError);
         bet.decision(partyOne);
     }
 }
-

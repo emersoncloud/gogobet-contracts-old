@@ -16,10 +16,23 @@ contract BetFactoryTest is Test {
     );
 
     uint256 private randNonce = 0;
-	function randAddress() internal returns (address) {
-		randNonce++;
-		return address(uint160(uint256(keccak256(abi.encodePacked(randNonce, blockhash(block.timestamp))))));
-	}
+
+    function randAddress() internal returns (address) {
+        randNonce++;
+        return
+            address(
+                uint160(
+                    uint256(
+                        keccak256(
+                            abi.encodePacked(
+                                randNonce,
+                                blockhash(block.timestamp)
+                            )
+                        )
+                    )
+                )
+            );
+    }
 
     BetFactory private betFactory;
 
@@ -35,13 +48,14 @@ contract BetFactoryTest is Test {
         string memory description = "test-description";
 
         vm.expectEmit(true, true, true, false);
-        emit BetCreated(randAddress(), betAmount, partyOne, partyTwo, oracle, description);
-        betFactory.newBet(
+        emit BetCreated(
+            randAddress(),
             betAmount,
             partyOne,
             partyTwo,
             oracle,
             description
         );
+        betFactory.newBet(betAmount, partyOne, partyTwo, oracle, description);
     }
 }

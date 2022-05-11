@@ -19,13 +19,16 @@ contract Bet {
         }
         _;
     }
-    
+
     modifier betParties(address _better) {
-        require(_better == partyOne || _better == partyTwo, "not part of the bet");
+        require(
+            _better == partyOne || _better == partyTwo,
+            "not part of the bet"
+        );
         _;
     }
 
-    constructor (
+    constructor(
         uint32 _betAmount,
         address _partyOne,
         address _partyTwo,
@@ -47,10 +50,13 @@ contract Bet {
     }
 
     function decision(address _winner) public onlyOracle {
-        require(_winner == partyOne || winner == partyTwo, "Winner must be part of the bet");
+        require(
+            _winner == partyOne || winner == partyTwo,
+            "Winner must be part of the bet"
+        );
         require(betPaidUp(), "the bet has not been full paid yet");
 
-        (bool sent,) = _winner.call{value: address(this).balance}("");
+        (bool sent, ) = _winner.call{value: address(this).balance}("");
         require(sent, "Failed to send ether");
 
         winner = _winner;

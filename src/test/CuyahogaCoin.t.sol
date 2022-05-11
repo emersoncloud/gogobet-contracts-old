@@ -5,20 +5,17 @@ import "forge-std/console.sol";
 import "../CuyahogaCoin.sol";
 
 contract CuyahogaCoinTest is Test {
-
     uint256 private randAddressNonce = 0;
     CuyahogaCoin coin;
 
     function setUp() public {
-        coin = new CuyahogaCoin(
-            "cuyahogacoin",
-            "cc",
-            18
-        );
+        coin = new CuyahogaCoin("cuyahogacoin", "cc", 18);
     }
 
     function testMint() public {
-        address addr1 = address(uint160(uint256(keccak256((abi.encodePacked("test"))))));
+        address addr1 = address(
+            uint160(uint256(keccak256((abi.encodePacked("test")))))
+        );
 
         coin.mint(addr1, 10 ether);
 
@@ -55,9 +52,18 @@ contract CuyahogaCoinTest is Test {
 
     function randomAddress() internal returns (address) {
         randAddressNonce++;
-        return address(uint160(uint256(keccak256(abi.encodePacked(
-            randAddressNonce,
-            blockhash(block.number)
-        )))));
+        return
+            address(
+                uint160(
+                    uint256(
+                        keccak256(
+                            abi.encodePacked(
+                                randAddressNonce,
+                                blockhash(block.number)
+                            )
+                        )
+                    )
+                )
+            );
     }
 }

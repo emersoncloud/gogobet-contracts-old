@@ -14,11 +14,15 @@ contract CuyahogaCoin is ERC20 {
         _;
     }
 
-    constructor (string memory _name, string memory _symbol, uint8 _decimals) ERC20(_name, _symbol, _decimals) {
-            owner = msg.sender;
-            _mint(msg.sender, 10 ether);
-        }
-    
+    constructor(
+        string memory _name,
+        string memory _symbol,
+        uint8 _decimals
+    ) ERC20(_name, _symbol, _decimals) {
+        owner = msg.sender;
+        _mint(msg.sender, 10 ether);
+    }
+
     function mint(address to, uint256 amount) public onlyOwner {
         _mint(to, amount);
     }

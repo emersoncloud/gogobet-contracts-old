@@ -13,12 +13,9 @@ contract BetFactory {
         string description
     );
 
-    event TwelveCreated(
-        address caller,
-        uint32 amount
-    );
+    event TwelveCreated(address caller, uint32 amount);
 
-    function return12() public returns(uint) {
+    function return12() public returns (uint256) {
         emit TwelveCreated(msg.sender, 12);
         return 12;
     }
